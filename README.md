@@ -37,10 +37,6 @@ Since the lane curvatures do not change much in subsequent frames, Localized sea
 Lane-line pixels and fit their positions with a polynomial
 Perspective transform
 Note : Warped binary
-![](warped_test1.jpg)
-![](warped_test2.jpg)
-![](warped_test3.jpg)
-![](warped_test4.jpg)
 ![](warped_test5.jpg)
 ![](OP_test4.jpg)
 images of the test images
