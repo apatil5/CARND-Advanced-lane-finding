@@ -30,7 +30,7 @@ A gradient range (0.4 to 1.7 or -1.7 to -0.4) is finalized to find pixel of resp
 
 
 Lastly four appropriate destination points are chosen and cv2.warpPerspective() function is used to get warped image
-![](warped_test5.jpg)
+![](warped.jpg)
 After perspective transformation step, lane pixels are obtained by implementing sliding window method. In sliding window method, lane pixels are searched inside a smaller window of dimensions 80 x 100. The search begins from the bottom of the image and initially the x coordinate of the center of first image is chosen to be the value obtained from histogram. Further the next window is slides horizontally based on the location of the center of the pixels inside the search window. This goes on in a loop until all the rows of the image is searched and desired pixels of both left and right lanes are obtained . The location of code for this part is Cell : 1 line no. 164 -222
 
 Since the lane curvatures do not change much in subsequent frames, Localized search method is implemented by searching forthelanepixelsin thevicinityoflanecurveobtainedin previousframe.To accomplishthistask,global variablesareusedandlanecurvaturecoefficientsarestored.ThelocationofcodeforthispartisCell:1line no.224-264Inadditiontothatlanepixelsfromlastframesareadded/combinedwithlanepixelsofcurrentframetoobtainedrobustlanecurvature.Thisensuresanefficientpixel searchandlanecurvaturecomputation.Intheprojectvideotest,thelanepixelsaredetectedbylocalizedsearchmethodin almostalloftheframesexceptin veryfewdetectable frames.ThelocationofcodeforthispartisCell:1line no.160-161
