@@ -27,16 +27,16 @@ Example of Combined binar
 The combined binary image is then masked to remove undesired pixel information from the image. This is one of the most crucial step where pixel points separated between left and right lanes. Using cv2.HoughLinesP() command, lines are obtained in the masked image and then pixels corresponding to left and right lanes are separated based on the slope of the respective line.
 
 A gradient range (0.4 to 1.7 or -1.7 to -0.4) is finalized to find pixel of respective lanes. Further threshold and other parameters are tuned to meet the project requirement. Lastly, four appropriate corner points are obtained by applying polyfit function on right lane and left lane points respectively. The code presented below is taken from Cell : 1 and line no. = 56 - 87
-
-
 Lastly four appropriate destination points are chosen and cv2.warpPerspective() function is used to get warped image
-![](warped.jpg)
-After perspective transformation step, lane pixels are obtained by implementing sliding window method. In sliding window method, lane pixels are searched inside a smaller window of dimensions 80 x 100. The search begins from the bottom of the image and initially the x coordinate of the center of first image is chosen to be the value obtained from histogram. Further the next window is slides horizontally based on the location of the center of the pixels inside the search window. This goes on in a loop until all the rows of the image is searched and desired pixels of both left and right lanes are obtained . The location of code for this part is Cell : 1 line no. 164 -222
+![](warped.JPG)
+Next,sliding window method is implemented to search lane pixels inside a smaller window of dimensions 80 x 100. The search begins from the bottom of the image.
+Initially the x coordinate of the center of first image is chosen to be the value obtained from histogram. Further the next window initiates immidietely above the previous window and slides horizontally towards the mean of the pixels which fall inside the search window. This process goes on in a loop until all the rows of the image is searched and desired pixels of both left and right lanes are obtained.
+![](search.JPG)
 
-Since the lane curvatures do not change much in subsequent frames, Localized search method is implemented by searching forthelanepixelsin thevicinityoflanecurveobtainedin previousframe.To accomplishthistask,global variablesareusedandlanecurvaturecoefficientsarestored.ThelocationofcodeforthispartisCell:1line no.224-264Inadditiontothatlanepixelsfromlastframesareadded/combinedwithlanepixelsofcurrentframetoobtainedrobustlanecurvature.Thisensuresanefficientpixel searchandlanecurvaturecomputation.Intheprojectvideotest,thelanepixelsaredetectedbylocalizedsearchmethodin almostalloftheframesexceptin veryfewdetectable frames.ThelocationofcodeforthispartisCell:1line no.160-161
-Lane-line pixels and fit their positions with a polynomial
-Perspective transform
-Note : Warped binary
+Since the lane curvatures do not change much in subsequent frames, Localized search method is implemented by searching for the lane pixels in the vicinity of lane curve obtained in previous frame. To accomplish this task, global variables are used and lane curvature coefficients are stored. 
+
+In addition to that lane pixels from last frame are added/combined with lane pixels of current frame to obtaine robust lane curvature. This ensures an efficient pixel search and lane curvature computation. In the project video test,the lane pixel s are detected by localized searchmethod in almost all of the frames except in very few detectable frames.
+Lane-line pixels and fit their positions with a polynomia
 
 ![](OP_test4.jpg)
 
