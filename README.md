@@ -18,31 +18,27 @@ Calibrated Image
 ![](AA.jpg) 
 
 2) Binary images
-Binary images are obtained by using sobel operator in X direction along with S Channel and V channel of images. The thresholds were tuned to obtain maximum number of only the desired pixels of curved striped lanes. All three binary images where combined to obtained final binary 2D image to be processed furhter. 
-The code presented below is taken from Cell : 1 and line no. = 33-54
+Binary images are obtained by union operation on images obtained by sobel operator in X direction, S Channel and V channel of the image. The thresholds were tuned to obtain maximum number of desired pixels of lanes while limiting the undesired pixels.
+Binary Image = (Sobel operator X-axix) U (S Channel of HLS)  U (V channel of HSV)
 
-Sobel along X 
-S Channel of HLS
-V channel of HSV
-
-Combined binar
-Combined binary imagey image
+Example of Combined binar
 ![](cb_test5.jpg)
 
-Firstly, The combined binary image is masked to remove undesired pixels from the image. This is one of the most crucial step where pixel points separated between left and right lanes. Using cv2.HoughLinesP() command, lines are obtained in the masked image and then pixels corresponding to left and right lanes are separated based on the slope of the respective line. A gradient range (0.4 to 1.7 or -1.7 to -0.4) is finalized to find pixel of respective lanes. Further threshold and other parameters are tuned to meet the project requirement. Lastly, four appropriate corner points are obtained by applying polyfit function on right lane and left lane points respectively. The code presented below is taken from Cell : 1 and line no. = 56 - 87
+The combined binary image is then masked to remove undesired pixel information from the image. This is one of the most crucial step where pixel points separated between left and right lanes. Using cv2.HoughLinesP() command, lines are obtained in the masked image and then pixels corresponding to left and right lanes are separated based on the slope of the respective line.
+
+A gradient range (0.4 to 1.7 or -1.7 to -0.4) is finalized to find pixel of respective lanes. Further threshold and other parameters are tuned to meet the project requirement. Lastly, four appropriate corner points are obtained by applying polyfit function on right lane and left lane points respectively. The code presented below is taken from Cell : 1 and line no. = 56 - 87
+
+
 Lastly four appropriate destination points are chosen and cv2.warpPerspective() function is used to get warped image
+![](warped_test5.jpg)
 After perspective transformation step, lane pixels are obtained by implementing sliding window method. In sliding window method, lane pixels are searched inside a smaller window of dimensions 80 x 100. The search begins from the bottom of the image and initially the x coordinate of the center of first image is chosen to be the value obtained from histogram. Further the next window is slides horizontally based on the location of the center of the pixels inside the search window. This goes on in a loop until all the rows of the image is searched and desired pixels of both left and right lanes are obtained . The location of code for this part is Cell : 1 line no. 164 -222
 
 Since the lane curvatures do not change much in subsequent frames, Localized search method is implemented by searching forthelanepixelsin thevicinityoflanecurveobtainedin previousframe.To accomplishthistask,global variablesareusedandlanecurvaturecoefficientsarestored.ThelocationofcodeforthispartisCell:1line no.224-264Inadditiontothatlanepixelsfromlastframesareadded/combinedwithlanepixelsofcurrentframetoobtainedrobustlanecurvature.Thisensuresanefficientpixel searchandlanecurvaturecomputation.Intheprojectvideotest,thelanepixelsaredetectedbylocalizedsearchmethodin almostalloftheframesexceptin veryfewdetectable frames.ThelocationofcodeforthispartisCell:1line no.160-161
 Lane-line pixels and fit their positions with a polynomial
 Perspective transform
 Note : Warped binary
-![](warped_test5.jpg)
+
 ![](OP_test4.jpg)
-images of the test images
-are stored in the folder
-output_images with name :
-warped_test*.jpg
 
 Improvement Area:
 The pipeline fails to find lane pixels for when the vehicle encounters bump or a jerk. Also if pipeline is vulnerable to changes in lane surfaces, shadows, tire marks, black patches,􀀃􀁒􀁕􀀃􀁙􀁈􀁋􀁌􀁆􀁏􀁈􀁖􀀃􀁌􀁑􀀃􀁉􀁕􀁒􀁑􀁗􀀃􀁒􀁕􀀃􀁄􀁇􀁍􀁄􀁆􀁈􀁑􀁗􀀃􀁏􀁄􀁑􀁈􀀃. It required lots of tuning of Hough lines parameters to get suitable pixels. Some times pixels are not easily obtained and pipeline fails to find the lanes. As solution to these problems, I have to abstract thoughts. First, a filter can be designed which can identify anomalous and undesired pixel by comparing the last frame. Second, a dynamic mask can be designed which can change its shape according to the information received on lanes from last frame.Examples of pipe line failure:
