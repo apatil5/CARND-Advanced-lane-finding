@@ -29,7 +29,7 @@ The combined binary image is then masked to remove undesired information from th
 A gradient range (0.4 to 1.7 or -1.7 to -0.4) is finalized to find pixel of respective lanes. Further threshold and other parameters are tuned to meet the requirements. 
 Further perspective transformation is performed on the masked image by using cv2.warpPerspective() function to get the warped image
 
-![](warped.JPG
+![](warped.JPG)
 
 **Window search method**
 Next, sliding window method is implemented to search lane pixels inside a smaller window of dimensions 80 x 100 pixels. The search begins from the bottom of the image. Further the next window initiates immediately above the previous window and slides horizontally towards the mean of the pixels which fall inside the search window. This process goes on in a loop until all the rows of the image is searched and desired pixels of both left and right lanes are obtained.
