@@ -43,6 +43,6 @@ Additionally, lane pixels from last frame are combined with lane pixels of curre
 
 ![](OP_test4.jpg)
 
-**Scope of improvement:**
+**Scope for improvement:**
 
 The pipeline fails to find lane pixels when the vehicle encounters bump or a jerk. Also, if pipeline is vulnerable to changes in lane surfaces, shadows, tire marks, black patches, It required lots of tuning of Hough lines parameters to get suitable pixels. Sometimes pixels are not easily obtained, and pipeline fails to find the lanes. As solution to these problems, I have two abstract thoughts. First, a filter can be designed which can identify anomalous and undesired pixel by comparing the last frame. Second, a dynamic mask can be designed which can change its shape according to the information received on lanes from last frame. Examples of pipe line failure:
