@@ -23,7 +23,7 @@ After removing the distortions, binary image is obtained by performing union ope
 Binary Image = (Sobel operator X-axis) U (S Channel of HLS)  U (V channel of HSV)
 
 Example of Combined binary image
-![](cb_test5.jpg)
+![](Bin_img.JPG)
 
 The combined binary image is then masked to remove undesired information from the image. Using cv2.HoughLinesP() command, lines are obtained in the masked image and then pixels corresponding to left and right lanes are separated based on the slope of the respective line.
 A gradient range (0.4 to 1.7 or -1.7 to -0.4) is finalized to find pixel of respective lanes. Further threshold and other parameters are tuned to meet the requirements. 
