@@ -9,23 +9,31 @@ Firstly Camera needs to be calibrated for the distortions present in the images.
 5. A mesh grid of dimension (nx , ny) is formed to represent real world chess board points on a plane. The mesh grid points are then reshaped into 3 dimensional array.
 6. Calibration matrix and distortion matrix is then obtained using command cv2.calibrateCamera and Indices array and objective array as input. The code presented below is taken from Cell : 1 and line no. = 9-25
 
-Example Image
+However matrix and coefficients obtained by a single distorted image is not sufficient to remove other distortions. Hence an augmented array is formed by stiching together the distortions matirces obtained from several distorted images of the chess board. 
 
-However matrix and coefficients obtained by the calibration on a single image is not enough and it does not work. 
-
-Therefore matrix and coefficients must be computed on the augmented arrays consisting of corner and objective points from all calibration images . For every calibration image provided in workspace, above steps are performed to find matrices. All the corner matrices are first joined together to form an augmented array and similarly an augmented Objective array is formed.
-
-Binary images and combined binary images
-I used binary images obtained from sobel operator in X direction along with S Channel and V channel. The thresholds were tuned to obtain maximum pixel points of curved striped lanes while discarding undesired pixels in the respective binary images. All three binary images where combined to obtained final binary 2D image to find lane. pixels. 
+2) Binary images
+Binary images are obtained by using sobel operator in X direction along with S Channel and V channel of images. The thresholds were tuned to obtain maximum number of only the desired pixels of curved striped lanes. All three binary images where combined to obtained final binary 2D image to be processed furhter. 
 The code presented below is taken from Cell : 1 and line no. = 33-54
-Sobel along X along X
-S Channel of HLS Channel of HLS
+
+Sobel along X 
+S Channel of HLS
 V channel of HSV
-V channel of HSV
+
 Combined binar
 Combined binary imagey image
 
 Note : Combined binary images of the test images are stored in the folder output_images with name : cb_test*.jpg
+![](OP_test4.jpg)
+![](cb_test1.jpg)
+![](cb_test2.jpg)
+![](cb_test3.jpg)
+![](cb_test4.jpg)
+![](cb_test5.jpg)
+![](warped_test1.jpg)
+![](warped_test2.jpg)
+![](warped_test3.jpg)
+![](warped_test4.jpg)
+![](warped_test5.jpg)
 Firstly, The combined binary image is masked to remove undesired pixels from the image. This is one of the most crucial step where pixel points separated between left and right lanes. Using cv2.HoughLinesP() command, lines are obtained in the masked image and then pixels corresponding to left and right lanes are separated based on the slope of the respective line. A gradient range (0.4 to 1.7 or -1.7 to -0.4) is finalized to find pixel of respective lanes. Further threshold and other parameters are tuned to meet the project requirement. Lastly, four appropriate corner points are obtained by applying polyfit function on right lane and left lane points respectively. The code presented below is taken from Cell : 1 and line no. = 56 - 87
 Lastly four appropriate destination points are chosen and cv2.warpPerspective() function is used to get warped image
 After perspective transformation step, lane pixels are obtained by implementing sliding window method. In sliding window method, lane pixels are searched inside a smaller window of dimensions 80 x 100. The search begins from the bottom of the image and initially the x coordinate of the center of first image is chosen to be the value obtained from histogram. Further the next window is slides horizontally based on the location of the center of the pixels inside the search window. This goes on in a loop until all the rows of the image is searched and desired pixels of both left and right lanes are obtained . The location of code for this part is Cell : 1 line no. 164 -222
