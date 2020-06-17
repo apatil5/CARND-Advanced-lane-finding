@@ -22,7 +22,7 @@ After removing the distortions, binary image is obtained by performing union ope
 
 Binary Image = (Sobel operator X-axis) U (S Channel of HLS)  U (V channel of HSV)
 
-Example of Combined binar
+Example of Combined binary image
 ![](cb_test5.jpg)
 
 The combined binary image is then masked to remove undesired information from the image. Using cv2.HoughLinesP() command, lines are obtained in the masked image and then pixels corresponding to left and right lanes are separated based on the slope of the respective line.
@@ -32,6 +32,7 @@ Further perspective transformation is performed on the masked image by using cv2
 ![](warped.JPG)
 
 **Window search method**
+
 Next, sliding window method is implemented to search lane pixels inside a smaller window of dimensions 80 x 100 pixels. The search begins from the bottom of the image. Further the next window initiates immediately above the previous window and slides horizontally towards the mean of the pixels which fall inside the search window. This process goes on in a loop until all the rows of the image is searched and desired pixels of both left and right lanes are obtained.
 ![](search.JPG)
 
